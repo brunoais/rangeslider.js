@@ -217,6 +217,7 @@
         this.$document          = $(document);
         this.$element           = $(element);
         this.options            = $.extend( {}, defaults, options );
+        this.container         = this.options.insertInside;
         this.polyfill           = this.options.polyfill;
         this.orientation        = this.$element[0].getAttribute('data-orientation') || this.options.orientation;
         this.onInit             = this.options.onInit;
@@ -249,6 +250,17 @@
 			this.$range.insertAfter(this.$element);
 		}
 		
+		// Allow keeping the input visible, specially useful if it is not a range and you want to allow typing an arbitrary number
+		if(!this.options.keepInputVisible){
+			// visually hide the input
+			this.$element.css({
+				'position': 'absolute',
+				'width': '1px',
+				'height': '1px',
+				'overflow': 'hidden',
+				'opacity': '0'
+			});
+		}
 
         // Store context
         this.handleDown = $.proxy(this.handleDown, this);
