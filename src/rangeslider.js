@@ -240,16 +240,15 @@
         this.toFixed    = (this.step + '').replace('.', '').length - 1;
         this.$fill      = $('<div class="' + this.options.fillClass + '" />');
         this.$handle    = $('<div class="' + this.options.handleClass + '" />');
-        this.$range     = $('<div class="' + this.options.rangeClass + ' ' + this.options[this.orientation + 'Class'] + '" id="' + this.identifier + '" />').insertAfter(this.$element).prepend(this.$fill, this.$handle);
+        this.$range     = $('<div class="' + this.options.rangeClass + ' ' + this.options[this.orientation + 'Class'] + '" id="' + this.identifier + '" />').prepend(this.$fill, this.$handle);
 
-        // visually hide the input
-        this.$element.css({
-            'position': 'absolute',
-            'width': '1px',
-            'height': '1px',
-            'overflow': 'hidden',
-            'opacity': '0'
-        });
+		
+		if(this.container){
+			this.$range.prependTo(this.container);
+		} else {
+			this.$range.insertAfter(this.$element);
+		}
+		
 
         // Store context
         this.handleDown = $.proxy(this.handleDown, this);
